@@ -1,0 +1,19 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: shop-ecommerce
+  datasource:
+    url: jdbc:postgresql://localhost:5434/shop-ecommerce
+    username: postgres
+    password: reymitech
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+  data:
+    mongodb:
+      uri: mongodb://root:reymitech@localhost:27017/shop-ecommerce
