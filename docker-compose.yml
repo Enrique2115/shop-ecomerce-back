@@ -17,6 +17,7 @@ services:
   mongo:
     image: mongo
     container_name: mongo
+    restart: always
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
       - MONGO_INITDB_ROOT_PASSWORD=reymitech
@@ -24,7 +25,7 @@ services:
     ports:
       - 27017:27017
     volumes:
-      - ./mongo-data:/data/db
+      - ./mongo-init-scripts:/docker-entrypoint-initdb.d
 
-volumes:
-  mongo-data:
+#volumes:
+#  mongo-data:
