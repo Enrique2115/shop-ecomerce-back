@@ -5,17 +5,15 @@ import com.reymitech.app.ecommerce.orders.domain.enums.StatusOrder;
 import com.reymitech.app.ecommerce.orders.domain.models.Order;
 import com.reymitech.app.ecommerce.orders.domain.port.IOrderRepositoryPort;
 import com.reymitech.app.ecommerce.orders.domain.port.IOrderValidationService;
+import com.reymitech.app.ecommerce.orders.infraestructure.Contants;
 import com.reymitech.app.ecommerce.orders.presentation.request.CreateOrderRequest;
 import com.reymitech.app.ecommerce.products.domain.port.IProductRepositoryPort;
-import com.reymitech.app.ecommerce.utils.exceptions.GeneralExceptionHandler;
 import com.reymitech.app.ecommerce.utils.exceptions.GenericErrorResponse;
-import com.reymitech.app.ecommerce.utils.exceptions.NotFoundException;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class CreateOrderUseCase {
@@ -34,11 +32,11 @@ public class CreateOrderUseCase {
         List<String> existStockProducts = orderValidationService.existStockProducts(createOrderRequest, products);
 
         if (!existStockProducts.isEmpty()) {
-            throw new GenericErrorResponse("Existen productos sin stock: " + existStockProducts, HttpStatus.BAD_REQUEST);
+            throw new GenericErrorResponse(String.format(Contants.NOT_STOCK_PRODUCT, existStockProducts), HttpStatus.BAD_REQUEST);
         }
 
         if (!isValidTotal) {
-            throw new GenericErrorResponse("El monto total de la orden no coincide con el total de los productos solicitados", HttpStatus.BAD_REQUEST);
+            throw new GenericErrorResponse(Contants.IS_DIFFERENT_AMOUNT, HttpStatus.BAD_REQUEST);
         }
 
         createOrder(createOrderRequest);

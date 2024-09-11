@@ -7,10 +7,9 @@ import com.reymitech.app.ecommerce.orders.infraestructure.repository.MongoOrderR
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
-import reactor.core.publisher.Flux;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 @Component
 @Slf4j
@@ -29,15 +28,12 @@ public class OrderRepositoryAdapter implements IOrderRepositoryPort {
     }
 
     @Override
-    public Order findById(String id) {
-        return orderRepository.findById(id).block();
+    public Optional<Order> findById(String id) {
+        return Optional.ofNullable(orderRepository.findById(id).block());
     }
 
     @Override
     public void changeOrderStatus(String id, StatusOrder status) {
-
-        log.info("Change order status", status);
-
         Order order = orderRepository.findById(id).block();
         assert order != null;
         order.setStatus(status);
