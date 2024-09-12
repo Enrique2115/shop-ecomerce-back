@@ -1,6 +1,7 @@
 package com.reymitech.app.ecommerce.products.presentation;
 
 import com.reymitech.app.ecommerce.products.application.usecase.CreateProductUseCase;
+import com.reymitech.app.ecommerce.products.application.usecase.FindAllByQueryUseCase;
 import com.reymitech.app.ecommerce.products.application.usecase.FindAllProductsUseCase;
 import com.reymitech.app.ecommerce.products.application.usecase.FindByIdUseCase;
 import com.reymitech.app.ecommerce.products.domain.dtos.ProductDto;
@@ -21,6 +22,7 @@ public class ProductController {
     private final ModelMapper modelMapper;
     private final CreateProductUseCase createProductUseCase;
     private final FindAllProductsUseCase findAllProductsUseCase;
+    private final FindAllByQueryUseCase findAllByQueryUseCase;
     private final FindByIdUseCase findByIdUseCase;
 
     @GetMapping
@@ -32,6 +34,12 @@ public class ProductController {
     @GetMapping("/{id}")
     public ResponseEntity<Mono<ProductDto>> getProductById(@PathVariable final String id) {
         return ResponseEntity.ok(Mono.just(findByIdUseCase.execute(id)).map(product -> modelMapper.map(product, ProductDto.class)));
+    }
+
+    @GetMapping("/search/{query}")
+    public ResponseEntity<Flux<ProductDto>> searchProducts(@PathVariable final String query) {
+        Flux<ProductDto> products = Flux.fromIterable(findAllByQueryUseCase.execute(query)).map(product -> modelMapper.map(product, ProductDto.class));
+        return ResponseEntity.ok(products);
     }
 
     @PostMapping("/create")

@@ -36,4 +36,9 @@ public class ProductRepositoryAdapter implements IProductRepositoryPort {
     public Product findById(String id) {
         return productRepository.findById(id).orElseThrow( () -> new NotFoundException(String.format(Contants.PRODUCT_NOT_FOUND, id)));
     }
+
+    @Override
+    public List<Product> findAllByNameContaining(String query) {
+        return productRepository.findAllByNameContaining(query);
+    }
 }
