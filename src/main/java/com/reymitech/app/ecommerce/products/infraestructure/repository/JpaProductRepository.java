@@ -13,4 +13,6 @@ public interface JpaProductRepository extends JpaRepository<Product, String> {
     List<Product> findAllByActive(Active active);
 
     Product findBySku(String sku);
+
+    List<Product> findAllByNameContaining(String query);
 }

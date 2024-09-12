@@ -1,6 +1,7 @@
 package com.reymitech.app.ecommerce.products.infraestructure.config;
 
 import com.reymitech.app.ecommerce.products.application.usecase.CreateProductUseCase;
+import com.reymitech.app.ecommerce.products.application.usecase.FindAllByQueryUseCase;
 import com.reymitech.app.ecommerce.products.application.usecase.FindAllProductsUseCase;
 import com.reymitech.app.ecommerce.products.application.usecase.FindByIdUseCase;
 import com.reymitech.app.ecommerce.products.domain.port.IProductRepositoryPort;
@@ -24,5 +25,10 @@ public class UseCaseConfig {
     @Bean
     public FindByIdUseCase findByIdUseCase(IProductRepositoryPort productRepositoryPort) {
         return new FindByIdUseCase(productRepositoryPort);
+    }
+
+    @Bean
+    public FindAllByQueryUseCase findAllByQueryUseCase(IProductRepositoryPort productRepositoryPort) {
+        return new FindAllByQueryUseCase(productRepositoryPort);
     }
 }

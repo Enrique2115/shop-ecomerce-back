@@ -14,4 +14,6 @@ public interface IProductRepositoryPort {
     Optional<Product> findBySku(String sku);
 
     Product findById(String id);
+
+    List<Product> findAllByNameContaining(String query);
 }
