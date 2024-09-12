@@ -49,4 +49,9 @@ public class OrdersController {
         changeOrderStatusUseCase.execute(id, status);
     }
 
+    @PostMapping("/{id}/cancel")
+    public void cancelOrder(@PathVariable String id) {
+        changeOrderStatusUseCase.execute(id, StatusOrder.CANCELLED);
+    }
+
 }
